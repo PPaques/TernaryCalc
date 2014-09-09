@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NCalc;
 
 namespace TernaryCalc
 {
@@ -14,13 +15,13 @@ namespace TernaryCalc
             Console.WriteLine("Welcome to Ternary Calc Software");
             Console.WriteLine("Please enter your ternary operations then press enter:");
 
-            // Step 1 : get the string to compute
-            string original_line = Console.ReadLine();
-
-            // Step 2 : Convert all numbers to decimal
             try
             {
+                // Step 1 : get the string to compute
+                string original_line = Console.ReadLine();
+                // Step 2 : Convert all numbers to decimal
                 string base10_line = ConvertCalcLineFromBase3To10(original_line);
+                // Step 3 : Parse and execute the string
             }
             catch (Exception)
             {
@@ -30,7 +31,7 @@ namespace TernaryCalc
             }
 
 
-            // Step 3 : Parse and execute the string
+
             // Step 4 : Convert back in base 3
             // Step 5 : show result
 
