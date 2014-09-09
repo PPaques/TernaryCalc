@@ -13,7 +13,7 @@ namespace TernaryCalc
         /// Simple function to convert a base 3 to base 10 
         /// </summary>
         /// <param name="original_line">Base 3 line to be converted</param>
-        /// <returns></returns>
+        /// <returns>Converted Base 10 number</returns>
         public static string ConvertToBase10( string base3_number)
         {
             Int32 base10_number = 0;
@@ -33,6 +33,11 @@ namespace TernaryCalc
             return base10_number.ToString();
         }
 
+        /// <summary>
+        /// Convert a base 10 number to a base 3
+        /// </summary>
+        /// <param name="base10_number">Original base 10 number</param>
+        /// <returns>Converted base 3 number</returns>
         public static string ConvertFromBase10(string base10_number)
         {
             string base3_number = "";
@@ -56,20 +61,20 @@ namespace TernaryCalc
         /// Convert a calc line in base 3 to a calc line ine base 10
         /// </summary>
         /// <param name="calc_line_base_3">the string in base 3 to convert</param>
-        /// <returns></returns>
-        public static string ConvertCalcLineFromBase10(string calc_line_base_3)
+        /// <returns>A string line in base 10 number with all operations</returns>
+        public static string ConvertCalcLineFromBase10(string base3_calc_line)
         {
-            string calc_line_base_10 = "";
+            string base10_calc_line = "";
             string accumulator_number = "";
-            string tempory_char = "";
+            string tempory_string = "";
 
             // purpose: made a for to convert all numbers to decimal number and keep all operations
-            for (int i = 0; i < calc_line_base_3.Length; i++)
+            for (int i = 0; i < base3_calc_line.Length; i++)
             {
                 // Debug
                 // Console.WriteLine(calc_line_base_3.Substring(i, 1));
-                tempory_char = calc_line_base_3.Substring(i, 1);
-                switch (tempory_char)
+                tempory_string = base3_calc_line.Substring(i, 1);
+                switch (tempory_string)
                 {
                     // if the next char is an operator
                     case "+":
@@ -82,13 +87,13 @@ namespace TernaryCalc
                         // first we verify if ther is a number in the accumulator, if there is, we have to convert the number
                         if (accumulator_number != "")
                         {
-                            calc_line_base_10 += Ternary.ConvertToBase10(accumulator_number).ToString();
+                            base10_calc_line += Ternary.ConvertToBase10(accumulator_number).ToString();
                             // reset the accumulator
                             accumulator_number = "";
                         }
 
                         // add the current character
-                        calc_line_base_10 += tempory_char;
+                        base10_calc_line += tempory_string;
                         break;
 
                     // if the next char is a ternary number
@@ -96,12 +101,12 @@ namespace TernaryCalc
                     case "1":
                     case "2":
                         // we add the number to the accumulator
-                        accumulator_number += tempory_char;
+                        accumulator_number += tempory_string;
                         break;
 
                     // if unknow, throw an error
                     default:
-                        Console.WriteLine("You used a bad character in your calc. This character will be ignored : " + tempory_char);
+                        Console.WriteLine("You used a bad character in your calc : " + tempory_string);
                         throw new BadImageFormatException();
                 }
             }
@@ -109,10 +114,10 @@ namespace TernaryCalc
             // at the end we have to verify that the accumulator is ok
             if (accumulator_number != "")
             {
-                calc_line_base_10 += Ternary.ConvertToBase10(accumulator_number).ToString();
+                base10_calc_line += Ternary.ConvertToBase10(accumulator_number).ToString();
             }
 
-            return calc_line_base_10;
+            return base10_calc_line;
         }
     }
 }

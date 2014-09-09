@@ -33,16 +33,18 @@ namespace TernaryCalc
                     string base3_result = Ternary.ConvertFromBase10(base10_result);
 
                     // Step 5 : show result
-                    Console.WriteLine("Base 3 : " + original_line + " = " + base3_result);
+                    Console.WriteLine(original_line + " = " + base3_result);
 
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Press any key to retry.");
+                    Console.ReadKey();
+                    Console.Clear();
                     continue;
                 }
 
-                Console.WriteLine("Press escape to exit or any key to make another operation");
+                Console.WriteLine("Press escape to exit or any key to continue");
                 if (Console.ReadKey().Key == ConsoleKey.Escape)
                     break;
                 Console.Clear();
