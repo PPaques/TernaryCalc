@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NCalc;
+using NCalc; // library that can parse and execute calcs in base 10. Under MIT licence.
 
 namespace TernaryCalc
 {
@@ -22,6 +22,12 @@ namespace TernaryCalc
                 // Step 2 : Convert all numbers to decimal
                 string base10_line = ConvertCalcLineFromBase3To10(original_line);
                 // Step 3 : Parse and execute the string
+                string base10_result = new Expression(base10_line).Evaluate().ToString();
+                Console.WriteLine("decimal : " + base10_line + " = " + base10_result);
+                // Step 4 : Convert back in base 3
+                string base3_result = ConvertToBase3(base10_result);
+                Console.WriteLine("Base 3 : " + original_line + " = " + base3_result);
+                
             }
             catch (Exception)
             {
@@ -32,7 +38,7 @@ namespace TernaryCalc
 
 
 
-            // Step 4 : Convert back in base 3
+
             // Step 5 : show result
 
 
@@ -108,23 +114,42 @@ namespace TernaryCalc
         /// </summary>
         /// <param name="original_line">Base 3 line to be converted</param>
         /// <returns></returns>
-        public static string ConvertToBase10( string original_line)
+        public static string ConvertToBase10( string base3_number)
         {
             Int32 base10_number = 0;
 
             // convert the string to a char line
-            char[] original_line_char = original_line.ToCharArray();
+            char[] base3_number_chars = base3_number.ToCharArray();
 
-            for (int i = 0; i < original_line_char.Length; i++) 
+            for (int i = 0; i < base3_number_chars.Length; i++) 
             {
                 // Console.WriteLine("actual char  :" + original_line_char[i]);
                 // Console.WriteLine("Actual Power :" +(original_line_char.Length- 1 - i).ToString());
                 // Console.WriteLine("Actual base10:" + base10_number);
-                base10_number += int.Parse(original_line_char[i].ToString()) * Convert.ToInt32(Math.Pow(3, original_line_char.Length - 1 -i));
+                base10_number += int.Parse(base3_number_chars[i].ToString()) * Convert.ToInt32(Math.Pow(3, base3_number_chars.Length - 1 -i));
                 // Console.WriteLine("New base10:" + base10_number);
             }
 
             return base10_number.ToString();
+        }
+
+        public static string ConvertToBase3(string base10_number)
+        {
+            string base3_number = "";
+            int q = Convert.ToInt32(base10_number);
+            int r = 0;
+
+            while (q >= 3) {
+                r = q % 3;
+                q = q / 3;
+
+                base3_number = r.ToString() + base3_number;
+            }
+            
+            // with the last character
+            base3_number = q.ToString() + base3_number;
+
+            return base3_number;
         }
     }
 }
